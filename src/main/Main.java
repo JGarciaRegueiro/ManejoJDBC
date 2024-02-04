@@ -27,6 +27,8 @@ public class Main {
         String user = properties.getProperty("user");
         String password = properties.getProperty("password");
 
+        
+        
         // Intentamos establecer la conexión
         try (Connection connection = DriverManager.getConnection(jdbcUrl, user, password)) {
             System.out.println("Conexión realizada!");
