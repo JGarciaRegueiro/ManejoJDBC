@@ -25,18 +25,16 @@ public class Main {
 		// Configuramos la conexión
 		String jdbcUrl = properties.getProperty("jdbcUrl");
         String user = properties.getProperty("user");
-        String password = properties.getProperty("password");
-
-        
+        String password = properties.getProperty("password");        
         
         // Intentamos establecer la conexión
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, user, password)) {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl, user, password.isBlank()? "" : password)) {
             System.out.println("Conexión realizada!");
             
             CarController carController = new CarController(connection);
             carController.init();
 
-        } catch (SQLException e) {
+        } catch (SQLException e) {        	
             System.err.println("Error al conectar a la base de datos: " + e.getMessage());
         }
 
