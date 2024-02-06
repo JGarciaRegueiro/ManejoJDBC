@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -82,6 +83,7 @@ public class PassengerController {
 					break;
 					
 				case 5:
+					
 					System.out.println("Introduce el id del pasajero:");
 					intValid(scanner);
 					int idPassengerToCar = scanner.nextInt();
@@ -94,8 +96,18 @@ public class PassengerController {
 						System.out.println("Introduce el id del coche a asignar:");
 						intValid(scanner);
 						int idCar = scanner.nextInt();
-						if(cdao.getCar(idCar) != null) {
-							pdao.addPassengerToCar(idPassengerToCar, idCar);
+						if(cdao.getCar(idCar) != null) {			
+							boolean pAtCar = false;
+							List<Passenger> listPassengersByCar = pdao.getPassengersByCar(idCar);
+							for (Passenger passengerItem : listPassengersByCar) {								
+								if(idPassengerToCar == passengerItem.getId()) {
+									pAtCar = true;
+								}
+							}
+							if(!pAtCar)
+								pdao.addPassengerToCar(idPassengerToCar, idCar);
+							else 
+								System.err.println("El pasajero ya se encuentra en el coche");
 						}else {
 							System.err.println("No existe ningún coche con ese ID");
 						}
