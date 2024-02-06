@@ -139,9 +139,11 @@ public class PassengerController {
 					intValid(scanner);
 					int idCar = scanner.nextInt();
 					List<Passenger> listPassengersByCar = pdao.getPassengersByCar(idCar);
-					for (Passenger passengerItem : listPassengersByCar) {
-						System.out.println(passengerItem);
-					}
+					
+						for (Passenger passengerItem : listPassengersByCar) {
+							System.out.println(passengerItem);
+						}
+					
 					break;
 					
 				case 8:

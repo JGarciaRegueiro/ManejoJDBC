@@ -38,7 +38,7 @@ public class PassengerDaoImpl implements PassengerDao{
 
 	@Override
 	public void addPassengerToCar(int idPassenger, int idCar) {
-		prepo.addPassengerToCar(idCar, idPassenger);
+		prepo.addPassengerToCar(idPassenger, idCar);
 	}
 
 	@Override

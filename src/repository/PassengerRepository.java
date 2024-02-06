@@ -136,28 +136,53 @@ public class PassengerRepository {
     }
 	
 	public List<Passenger> getPassengersByCar(int idCar) {
-        List<Passenger> passengers = new ArrayList<>();
-        String sql = "SELECT p.* FROM passengers p WHERE p.id IN (SELECT id_passenger FROM carspassengers WHERE id_car = ?)";
+	    List<Passenger> passengers = new ArrayList<>();
+	    String checkCarSql = "SELECT COUNT(*) AS count FROM cars WHERE id = ?";
+	    String getPassengersSql = "SELECT p.* FROM passengers p WHERE p.id IN (SELECT id_passenger FROM carspassengers WHERE id_car = ?)";
+	    
+	    // Comprobar si el coche existe o no
+	    try (PreparedStatement checkCarStatement = connection.prepareStatement(checkCarSql)) {
+	        checkCarStatement.setInt(1, idCar);
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, idCar);
+	        try (ResultSet checkCarResultSet = checkCarStatement.executeQuery()) {
+	            if (checkCarResultSet.next()) {
+	                int carCount = checkCarResultSet.getInt("count");
+	                if (carCount == 0) {
+	                    System.out.println("El coche con ID " + idCar + " no existe.");
+	                    return passengers; 
+	                }
+	            }
+	           
+	        }
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Passenger passenger = new Passenger();
-                    passenger.setId(resultSet.getInt("ID"));
-                    passenger.setName(resultSet.getString("NAME"));
-                    passenger.setAge(resultSet.getInt("AGE"));
-                    passenger.setWeight(resultSet.getFloat("WEIGHT"));
+	        // El coche existe,obtener los pasajeros
+	        
+	        try (PreparedStatement getPassengersStatement = connection.prepareStatement(getPassengersSql)) {
+	            getPassengersStatement.setInt(1, idCar);
 
-                    passengers.add(passenger);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+	            try (ResultSet resultSet = getPassengersStatement.executeQuery()) {
+	                while (resultSet.next()) {
+	                    Passenger passenger = new Passenger();
+	                    passenger.setId(resultSet.getInt("ID"));
+	                    passenger.setName(resultSet.getString("NAME"));
+	                    passenger.setAge(resultSet.getInt("AGE"));
+	                    passenger.setWeight(resultSet.getFloat("WEIGHT"));
 
-        return passengers;
-    }	
+	                    passengers.add(passenger);
+	                }
+	            }
+	            
+	            if (passengers.isEmpty()) {     
+        	        System.out.println("Este coche no tiene pasajeros");
+        	    }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    
+
+	    return passengers;
+	}	
 
 }
