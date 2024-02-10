@@ -11,9 +11,18 @@ public class CarController {
 	
 	private Connection connection;
 	
+	 /**
+     * Construye un objeto CarController con la conexión a la base de datos dada.
+     * 
+     * @param connection: La conexión a la base de datos que se utilizará.
+     */
 	public CarController(Connection connection) {
 		this.connection = connection;
 	}
+	
+	/**
+     * Inicia el sistema de gestión de coches.
+     */
 
 	public void init() {
 		
@@ -123,12 +132,25 @@ public class CarController {
 		scanner.close();
 	}
 	
+	/**
+     * Valida si la entrada es un número entero.
+     * 
+     * @param scanner: Objeto Scanner para la entrada.
+     */
+	
 	private void intValid(Scanner scanner) {
 		while (!scanner.hasNextInt()) {
             System.err.println("¡Error! Ingresa un número entero válido");
             scanner.next();
 		}
 	}
+	
+	/**
+     * Valida si la entrada es una cadena no vacía.
+     * 
+     * @param scanner: Objeto Scanner para la entrada.
+     * @return La cadena validada no vacía.
+     */
 	
 	private String stringValid(Scanner scanner) {
 		String input;

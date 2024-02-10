@@ -9,6 +9,9 @@ import java.util.Properties;
 
 import controller.CarController;
 
+/**
+ * Clase principal que inicia la aplicación.
+ */
 public class Main {
 
 	public static void main(String[] args) {
