@@ -10,16 +10,28 @@ import entities.Passenger;
 import modelo.CarDaoImpl;
 import modelo.PassengerDaoImpl;
 
+/**
+ * Controlador para gestionar las operaciones relacionadas con los pasajeros.
+ */
+
 public class PassengerController {
 	
 	private Connection connection;
 	
-
+	
+	 /**
+     * Constructor de PassengerController.
+     * @param connection: La conexión a la base de datos.
+     */
+	
 	public PassengerController(Connection connection) {
 		this.connection = connection;
 	}
 
-
+	/**
+     * Inicia el sistema de gestión de pasajeros.
+     */
+	
 	public void init() {
 		Scanner scanner = new Scanner(System.in);
 		PassengerDaoImpl pdao = new PassengerDaoImpl(connection);
@@ -157,12 +169,21 @@ public class PassengerController {
 		} while (option != 8);
 	}
 	
+	/**
+     * Valida si la entrada es un número entero.
+     * @param scanner: Objeto Scanner para la entrada.
+     */
+	
 	private static void intValid(Scanner scanner) {
 		while (!scanner.hasNextInt()) {
             System.err.println("¡Error! Ingresa un número entero válido");
             scanner.next();
 		}
 	}
+	/**
+     * Valida si la entrada es un número decimal.
+     * @param scanner:Objeto Scanner para la entrada.
+     */
 	
 	private static void doubleValid(Scanner scanner) {
 		while (!scanner.hasNextDouble()) {

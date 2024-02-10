@@ -9,14 +9,26 @@ import java.util.List;
 
 import entities.Car;
 
+/**
+ * Repositorio que maneja las operaciones de base de datos relacionadas con los coches.
+ */
 public class CarRepository {
 	
 	private Connection connection;
+	
+	 /**
+     * Constructor que establece la conexión para el repositorio de coches.
+     * @param connection: La conexión a la base de datos.
+     */
 	
 	public CarRepository(Connection connection) {
 		this.connection = connection;
 	}
 	
+	/**
+     * Inserta un nuevo coche en la base de datos.
+     * @param car:El coche a insertar.
+     */
 	public void insertCar(Car car) {
         String sql = "INSERT INTO CARS (BRAND, MODEL, YEAR, KM) VALUES (?, ?, ?, ?)";
 
@@ -38,6 +50,11 @@ public class CarRepository {
         }
     }
 	
+	/**
+     * Obtiene un coche de la base de datos por su identificador.
+     * @param idCar: El identificador del coche a obtener.
+     * @return El coche encontrado o null si no existe.
+     */
 	public Car getCar(int idCar) {
 		String sql = "SELECT * FROM CARS WHERE ID = ?";
 
@@ -64,6 +81,10 @@ public class CarRepository {
         return null;
 	}
 	
+	/**
+     * Elimina un coche de la base de datos por su identificador.
+     * @param idCar: El identificador del coche a eliminar.
+     */
 	public void deleteCar(int idCar) {
 		String sql = "DELETE FROM CARS WHERE ID = ?";
 
@@ -82,6 +103,10 @@ public class CarRepository {
         }
 	}
 	
+	 /**
+     * Actualiza los datos de un coche en la base de datos.
+     * @param car: El coche con los datos actualizados.
+     */
 	public void updateCar(Car car) {
 		String sql = "UPDATE CARS SET BRAND = ?, MODEL = ?, YEAR = ?, KM = ? WHERE ID = ?";
 
@@ -104,6 +129,10 @@ public class CarRepository {
         }
 	}
 	
+	/**
+     * Obtiene una lista de todos los coches almacenados en la base de datos.
+     * @return La lista de coches.
+     */
 	public List<Car> getCars() {
 		List<Car> cars = new ArrayList<>();
         String sql = "SELECT * FROM CARS";

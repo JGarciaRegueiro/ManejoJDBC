@@ -1,5 +1,4 @@
 package repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,14 +7,25 @@ import java.util.ArrayList;
 import java.util.List;
 import entities.Passenger;
 
+/**
+ * Repositorio que maneja las operaciones de base de datos relacionadas con los pasajeros.
+ */
 public class PassengerRepository {
 	
 	private Connection connection;
 	
+	/**
+     * Constructor que establece la conexión para el repositorio de pasajeros.
+     * @param connection: La conexión a la base de datos.
+     */
 	public PassengerRepository(Connection connection) {
 		this.connection = connection;
 	}
 	
+	/**
+     * Inserta un nuevo pasajero en la base de datos.
+     * @param passenger:El pasajero a insertar.
+     */
 	
 	public void insertPassenger(Passenger passenger) {
         String sql = "INSERT INTO PASSENGERS (NAME, AGE, WEIGHT) VALUES (?, ?, ?)";
@@ -37,6 +47,11 @@ public class PassengerRepository {
         }
     }
 	
+	/**
+     * Obtiene un pasajero de la base de datos por su identificador.
+     * @param idPassenger: El identificador del pasajero a obtener.
+     * @return El pasajero encontrado o null si no existe.
+     */
 	public Passenger getPassenger(int idPassenger) {
 		String sql = "SELECT * FROM PASSENGERS WHERE ID = ?";
 
@@ -62,6 +77,10 @@ public class PassengerRepository {
         return null;
 	}
 	
+	/**
+     * Elimina un pasajero de la base de datos por su identificador.
+     * @param idPassenger: El identificador del pasajero a eliminar.
+     */
 	public void deletePassenger(int idPassenger) {
 		String sql = "DELETE FROM PASSENGERS WHERE ID = ?";
 
@@ -80,6 +99,10 @@ public class PassengerRepository {
         }
 	}
 	
+	/**
+     * Obtiene una lista de todos los pasajeros almacenados en la base de datos.
+     * @return La lista de pasajeros.
+     */
 	public List<Passenger> getPassengers() {
 		List<Passenger> passengers = new ArrayList<>();
         String sql = "SELECT * FROM PASSENGERS";
@@ -102,6 +125,12 @@ public class PassengerRepository {
         return passengers;
 	}
 	
+	
+	/**
+     * Asocia un pasajero a un coche en la base de datos.
+     * @param idPassenger: El identificador del pasajero.
+     * @param idCar:El identificador del coche.
+     */
 	public void addPassengerToCar(int idPassenger, int idCar) {
         String sql = "INSERT INTO carspassengers (id_car, id_passenger) VALUES (?, ?)";
 
@@ -116,6 +145,11 @@ public class PassengerRepository {
         }
     }
 	
+	/**
+     * Elimina la asociación de un pasajero con un coche en la base de datos.
+     * @param idPassenger: El identificador del pasajero.
+     * @param idCar:El identificador del coche.
+     */
 	public void deletePassengerFromCar(int idPassenger, int idCar) {
         String sql = "DELETE FROM carspassengers WHERE id_car = ? AND id_passenger = ?";
 
@@ -135,6 +169,11 @@ public class PassengerRepository {
         }
     }
 	
+	/**
+     * Obtiene una lista de todos los pasajeros asociados a un coche en particular.
+     * @param idCar: El identificador del coche.
+     * @return La lista de pasajeros asociados al coche.
+     */
 	public List<Passenger> getPassengersByCar(int idCar) {
 	    List<Passenger> passengers = new ArrayList<>();
 	    String checkCarSql = "SELECT COUNT(*) AS count FROM cars WHERE id = ?";
@@ -180,8 +219,6 @@ public class PassengerRepository {
 	        e.printStackTrace();
 	    }
 	    
-	    
-
 	    return passengers;
 	}	
 
